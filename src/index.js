@@ -1,64 +1,71 @@
 
-let cont = 0;
+class App {
+    constructor() {
+        this.buttonCreate = document.getElementById('btn-create');
+        this.titulo = document.getElementById("titulo");
+        this.descricao = document.getElementById("descricao");
+        this.registerEvents();
+    }
 
-function createRecado(titulo, descricao) {
-    if(!titulo || !descricao) return alert('Preencha todos os campos;');
+    registerEvents() {
+        this.buttonCreate.onclick = (event) => this.createCard(event);
+    }
 
-    let containerCard = document.querySelector("#container-card");
-    cont++;
-    let elementRecado = `
-    <div class="col-md-4" id='card-${cont}' data-select=${cont}>
-        <div class="card mb-4 box-shadow">
-            <div class="card-header">
-                <h5 class="card-title">${titulo}</h5>
-            </div>
-            <div class="card-body">
-                <p class="card-text">${descricao}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                        <button type="button" id="delete-recado-${cont}" data-select="${cont}" class="btn btn-danger delete-button"}>Delete</button>
+    createCard(event) {
+        event.preventDefault();
+
+        if(this.titulo || this.descricao) {
+            const card = this.cardLayout(this.titulo.value, this.descricao.value);
+            this.insertHTML(card);
+            this.clearForm();
+            this.addEventClickDelete();
+        } else {
+            alert("Preencha os campos");
+        }
+    }
+
+    addEventClickDelete() {
+        const buttons = document.querySelectorAll('.delete-button');
+
+        buttons.forEach(item =>
+            item.onclick = (event) =>
+            this.deleteCard(event)
+        ); 
+    }
+
+    deleteCard(event) {
+        let card = event.path[5];
+        card.remove();
+    }
+
+    clearForm() {
+        this.titulo.value = "";
+        this.descricao.value = "";
+    }
+
+    insertHTML(card) {
+        document.getElementById('container-card').innerHTML += card;
+    }
+
+    cardLayout(titulo, descricao) {
+        let card = `
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h5 class="card-title">${titulo}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">${descricao}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-danger delete-button"}>Delete</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>`;    
-
-    containerCard.innerHTML += elementRecado;
-
-    let deleteButtons = document.querySelectorAll('.delete-button');
-    for (let i = 0; i < deleteButtons.length; i++) {
-        deleteButtons[i].addEventListener('click', function (e) {
-            preventDefaults(e);
-            deleteRecado(e);
-        });        
+            </div>`;
+        return card;
     }
 }
 
-function deleteRecado(e) {
-    let getAtributeElement = e.target.getAttribute("data-select");
-    let containerCardRemove = document.getElementById("card-" + getAtributeElement);
-    
-    containerCardRemove.remove();
-}
-
-function init() {
-    addEventListenerButtonSubmit();
-}
-
-function addEventListenerButtonSubmit() {
-    let buttonSubmitForm = document.querySelector('#criar-recado');
-    let titulo = document.querySelector('#titulo');
-    let descricao = document.querySelector('#descricao');
-
-    buttonSubmitForm.addEventListener('click', function(e){
-        preventDefaults(e);
-        createRecado(titulo.value, descricao.value);
-    });
-}
-
-function preventDefaults(e) {
-    e.stopPropagation();
-    e.preventDefault();
-}
-
-init();
+new App();
