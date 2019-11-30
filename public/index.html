@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>semana01</title>
+</head>
+<body>
+
+<header>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                <strong>GrowDev desafio</strong>
+            </a>
+        </div>
+    </div>
+
+    <main role="main">
+        <section class="jumbotron">
+            
+            <div class="container d-flex justify-content-center flex-md-column align-items-center">
+
+                <div class="jumbotron-heading">
+                    <h2>Deixe um recado abaixo:</h2>
+                </div>
+
+
+                <form class="col-md-4 p-2">
+                    <div class="form-group">
+                        <p class="lead">Digite um título:</p>
+                        <input type="text" class="form-control" id="titulo" placeholder="Digite o título..." required>
+                    </div>
+                    <div class="form-group">
+                        <p class="lead">Digite uma descrição:</p>
+                        <input type="text" class="form-control" id="descricao" placeholder="Digite a descrição..." required>
+                    </div>
+                    <button type="submit" id="criar-recado" class="btn btn-primary">Criar recado</button>
+                </form>
+                
+            </div>
+        </section>
+
+        <div class="container">
+
+            <div class="jumbotron-heading text-center">
+                <h2>Verifique seus recados abaixo:</h2>
+            </div>
+
+            <div class="row p-4" id="container-card">
+
+            </div>
+        </div>
+    </main>
+<header/>
+
+    <script src="./bundle.js"></script>    
+</body>
+</html>
