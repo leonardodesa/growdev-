@@ -5,7 +5,7 @@ const env = require('dotenv').config();
 
 const server = express();
 
-mongoose.connect("mongodb+srv://leonardodesa:leo12345@cluster0-hunu5.mongodb.net/test?retryWrites=true&w=majority",
+mongoose.connect(env.MONGO_URL,
   {
     useUnifiedTopology: true,
     useNewUrlParser: true
