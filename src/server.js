@@ -18,4 +18,5 @@ mongoose.connect("mongodb+srv://leonardodesa:leo12345@cluster0-hunu5.mongodb.net
 server.use(express.json());
 server.use(routes);
 
-server.listen(3333);
+// server.listen(3333);
+server.listen();
