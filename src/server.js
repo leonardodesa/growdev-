@@ -1,11 +1,11 @@
 const express = require('express');
 const routes = require('./routes');
 const mongoose = require("mongoose");
-const env = require('dotenv').config();
+require('dotenv').config();
 
 const server = express();
 
-mongoose.connect(env.MONGO_URL,
+mongoose.connect(process.env.MONGO_URL,
   {
     useUnifiedTopology: true,
     useNewUrlParser: true
@@ -19,4 +19,4 @@ mongoose.connect(env.MONGO_URL,
 server.use(express.json());
 server.use(routes);
 
-server.listen(env.PORT);
+server.listen(process.env.PORT);
