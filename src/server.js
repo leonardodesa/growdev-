@@ -1,6 +1,7 @@
 const express = require('express');
 const routes = require('./routes');
 const mongoose = require("mongoose");
+const env = require('dotenv').config();
 
 const server = express();
 
@@ -18,4 +19,4 @@ mongoose.connect("mongodb+srv://leonardodesa:leo12345@cluster0-hunu5.mongodb.net
 server.use(express.json());
 server.use(routes);
 
-server.listen();
+server.listen(env.PORT);
