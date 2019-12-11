@@ -6,20 +6,20 @@ import logo from '../assets/logo.png';
 import api from '../services/api';
 
 export default function Login({ history }) {
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState("");
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
     async function handleSubmit(e) {
         e.preventDefault();
         
-        const response = await api.post('/', {
+      const response = await api.post('/user/create', {
             login,
-            password 
+            password,
+            email
         });
 
-        console.log(response);
-
-        history.push('/main');
+        history.push('/mural');
     }
 
     return (
@@ -31,6 +31,12 @@ export default function Login({ history }) {
             placeholder="Digite seu Login"
             value={login}
             onChange={e => setLogin(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Digite seu E-mail"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
           <input
             type="password"
