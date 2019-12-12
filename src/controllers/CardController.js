@@ -11,6 +11,8 @@ module.exports = {
     async store(req, res) {
         const { titulo, descricao } = req.body;
 
+        // UserLogado.cards.push(cards)
+
         const card = await Card.create({
             titulo: titulo,
             descricao: descricao

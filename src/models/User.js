@@ -15,7 +15,12 @@ const UserSchema = new Schema(
         email: {
             type: String,
             required: true
-        }
+        },
+
+        cards: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Card'
+        }]
     },
 
     {
