@@ -1,6 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
+import { Login } from './pages/Login/index';
 
-import App from './App';
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                <Login>
 
-ReactDOM.render(<App />, document.getElementById('root'));
+                </Login>
+            </div>
+        )
+    }
+}

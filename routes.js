@@ -2,8 +2,8 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import Login from '../pages/Login';
-import Mural from '../pages/Mural';
+import Login from './src/pages/Login';
+import Mural from './src/pages/Mural';
 
 export default function Routes() {
     return(
