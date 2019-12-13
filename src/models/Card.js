@@ -11,6 +11,11 @@ const CardSchema = new Schema(
     descricao: {
         type: String,
         required: true
+    },
+
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
   },
   {

@@ -1,5 +1,5 @@
-const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
+import { Schema, model } from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const UserSchema = new Schema(
     {

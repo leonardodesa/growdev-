@@ -1,10 +1,9 @@
-const express = require("express");
-
+import express from 'express';
 const routes = express.Router();
 
-const CardController = require("./controllers/CardController");
-const UserController = require("./controllers/UserController");
-const AuthController = require("./controllers/AuthController");
+import AuthController from "./controllers/AuthController";
+import UserController from "./controllers/UserController";
+import CardController from "./controllers/CardController";
 
 routes.get('/cards', CardController.index);
 routes.post('/cards', CardController.store);
@@ -16,5 +15,6 @@ routes.delete("/cards/:id/delete", CardController.destroy);
 
 // Autenticação
 routes.post('/auth/register', AuthController.store);
+routes.post('/auth/authenticate', AuthController.authenticate);
 
-module.exports = routes;
+export default routes;

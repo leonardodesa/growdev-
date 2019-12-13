@@ -12,6 +12,7 @@ module.exports = {
         const { titulo, descricao } = req.body;
 
         // UserLogado.cards.push(cards)
+        // await UserLogado.save()
 
         const card = await Card.create({
             titulo: titulo,
