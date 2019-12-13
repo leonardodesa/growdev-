@@ -1,6 +1,6 @@
 
 const User = require('../models/User');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 module.exports = {
     async index(req, res) {
@@ -9,7 +9,7 @@ module.exports = {
             
             return res.json(users);
         } catch (error) {
-            return res.json({ success: false, message: 'Usuário criado com sucesso!', statusCode: 500});
+            // return res.json({ success: false, message: 'Usuário criado com sucesso!', statusCode: 500});
         }
     },
 

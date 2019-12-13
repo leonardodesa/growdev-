@@ -13,8 +13,8 @@ mongoose.connect(process.env.MONGO_URL,
   }
   )
   .then(() => console.log('DB Connected!'))
-  .catch( err => {
-    console.log(`Db connection Erro: ${err.message}`);
+  .catch( e => {
+    console.log(`Db connection Erro: ${e.message}`);
   });
   
 server.use(cors());
