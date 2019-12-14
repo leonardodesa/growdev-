@@ -1,20 +1,25 @@
-import express from 'express';
-const routes = express.Router();
+import express from 'express'
+const routes = express.Router()
 
-import AuthController from "./controllers/AuthController";
-import UserController from "./controllers/UserController";
-import CardController from "./controllers/CardController";
+import AuthController from './controllers/AuthController'
+import CardController from './controllers/CardController'
+import AuthenticController from './controllers/AuthenticController'
 
-routes.get('/cards', CardController.index);
-routes.post('/cards', CardController.store);
-routes.put('/cards/:id/edit', CardController.update);
-routes.delete("/cards/:id/delete", CardController.destroy);
+import auth from './middlewares/auth'
+
+// routes.get('/cards', CardController.index)
+// routes.post('/cards', CardController.store)
+routes.put('/cards/:id/edit', CardController.update)
+routes.delete('/cards/:id/delete', CardController.destroy)
 
 // routes.post('/user/create', UserController.store);
 // routes.get('/users', UserController.index);
 
 // Autenticação
-routes.post('/auth/register', AuthController.store);
-routes.post('/auth/authenticate', AuthController.authenticate);
+routes.post('/auth/register', AuthController.store)
+routes.post('/auth/authenticate', AuthController.authenticate)
 
-export default routes;
+routes.use(auth.index)
+routes.get('/mural', AuthenticController.index)
+
+export default routes
