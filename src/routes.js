@@ -19,6 +19,7 @@ routes.delete('/cards/:id/delete', CardController.destroy)
 routes.post('/auth/register', AuthController.store)
 routes.post('/auth/authenticate', AuthController.authenticate)
 
+
 routes.use(auth.index)
 routes.get('/mural', AuthenticController.index)
 
