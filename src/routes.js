@@ -3,8 +3,6 @@ const routes = express.Router()
 
 import AuthController from './controllers/AuthController'
 import CardController from './controllers/CardController'
-import AuthenticController from './controllers/AuthenticController'
-
 import auth from './middlewares/auth'
 
 // routes.get('/cards', CardController.index)
@@ -19,8 +17,7 @@ routes.delete('/cards/:id/delete', CardController.destroy)
 routes.post('/auth/register', AuthController.store)
 routes.post('/auth/authenticate', AuthController.authenticate)
 
-
 routes.use(auth.index)
-routes.get('/mural', AuthenticController.index)
+routes.get('/mural', CardController.index)
 
 export default routes
