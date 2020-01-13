@@ -5,13 +5,13 @@ class App {
         this.buttonCreate = document.getElementById("btn_create");
         this.buttonEdit = document.getElementById("btn_edit");
 
-        this.title = document.getElementById("input_title");
-        this.content = document.getElementById("input_content");
+        this.title = document.getElementById("title");
+        this.content = document.getElementById("content");
 
         this.cardEditing = null;
 
-        this.url = 'https://api-scrapbook.herokuapp.com/cards/';
-        // this.url = 'http://localhost:3000/scraps/';
+        // this.url = 'https://aplication-jwt-growdev.herokuapp.com/';
+        this.url = 'http://localhost:3030/';
 
         this.getScraps(this);
         this.registerEvents();
@@ -22,19 +22,32 @@ class App {
         this.buttonEdit.onclick = (event) => this.editCard(event);
     }
 
-    getScraps(app) {
-        axios.get(this.url)
-            .then(function (response) {
-                app.recoveryScraps(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .finally(function () {
-            });
+    async getScraps(app) {
+        const home = await axios.get(this.url + 'cards');
+
+        console.log(home);
+
+        // const scraps = (async function () {
+        //     await console.log('ok');
+        // })();
+        // axios.get(this.url)
+        //     .then(function (response) {
+        //         app.recoveryScraps(response.data);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     })
+        //     .finally(function () {
+        //     });
+    }
+
+    async teste() {
+        const leo = "ok";
+        return await leo;
     }
 
     recoveryScraps(data) {
+        console.log(data);
         for(item of data) {
             const html = this.cardLayout(item.id, item.title, item.content);
 
@@ -45,15 +58,13 @@ class App {
     }
 
     registerButtons() {
-        document.querySelectorAll('.delete-card').forEach(item => {
+        document.querySelectorAll('.delete_card').forEach(item => {
             item.onclick = event => this.deleteCard(event);
         });
 
-        document.querySelectorAll('.edit-card').forEach(item => {
+        document.querySelectorAll('.edit_card').forEach(item => {
             item.onclick = event => this.openEditCard(event);
         });
-
-        console.log("Register Buttons!");
     }
 
     createCard(event) {
@@ -67,40 +78,40 @@ class App {
     }
 
     sendToServer(app) {
-        axios.post(this.url, {
-                title: this.title.value,
-                content: this.content.value
-            })
-            .then(function (response) {
-                const {id, title, content} = response.data;
-                let html = app.cardLayout(id, title, content);
+        // axios.post(this.url, {
+        //         title: this.title.value,
+        //         content: this.content.value
+        //     })
+        //     .then(function (response) {
+        //         const {id, title, content} = response.data;
+                // let html = app.cardLayout(id, title, content);
+                let html = app.cardLayout(1, app.title.value, app.content.value);
 
-                app.insertHtml(html);
+                app.insertHtml(html);   
 
                 app.clearForm();
 
                 app.registerButtons();
-
-            })
-            .catch(function (error) {
-                console.log(error);
-                alert("Ops! Tente novamente mais tarde.");
-            })
-            .finally(function () {
-            });
+            // })
+            // .catch(function (error) {
+            //     console.log(error);
+            //     alert("Ops! Tente novamente mais tarde.");
+            // })
+            // .finally(function () {
+            // });
     }
 
     cardLayout(id, title, content) {
         const html = `
-            <div class="col mt-5" scrap="${id}">
+            <div class="col-sm-4" scrap="${id}">
                 <div class="card">
                     <div class="card-body">
                     <h5 class="card-title">${title}</h5>
                     <p class="card-text">${content}</p>
-                    <button type="button" class="btn btn-primary edit-card" data-toggle="modal" data-target="#editModal">
+                    <button type="button" class="btn btn-primary edit_card" data-toggle="modal" data-target="#editModal">
                         Editar
                     </button>
-                    <button type="button" class="btn btn-danger delete-card">Excluir</button>
+                    <button type="button" class="btn btn-danger delete_card">Excluir</button>
                     </div>
                 </div>
             </div>
@@ -110,7 +121,7 @@ class App {
     }
 
     insertHtml(html) {
-        document.getElementById("row_cards").innerHTML += html;
+        document.getElementById("container_card").innerHTML += html;
     }
 
     clearForm() {
@@ -134,12 +145,12 @@ class App {
 
     openEditCard = (event) => {
         const id = event.path[3].getAttribute('scrap');
+
         const title = event.path[1].children[0].innerHTML;
         const content = event.path[1].children[1].innerHTML;
-        
-        document.getElementById("edit-title").value = title;
-        document.getElementById("edit-content").value = content;
-        document.getElementById("edit-id").value = id;
+
+        document.getElementById("edit_title").value = title;
+        document.getElementById("edit_content").value = content;
 
         this.cardEditing = event.path[1];
         this.cardEditing.editId = id;
@@ -147,7 +158,7 @@ class App {
 
     editCard = (event) => {
         const id = this.cardEditing.editId;
-        const title = document.getElementById("edit-title").value;
+        const title = document.getElementById("edit_title").value;
         const content = document.getElementById("edit-content").value
 
         axios.put(`${this.url}${id}`, {
