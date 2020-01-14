@@ -1,13 +1,15 @@
 import Sequelize, { Model } from 'sequelize';
+import uuid from 'uuid/v4';
 
 class Card extends Model {
   static init(sequelize) {
     super.init(
       {
         id: {
-          type: Sequelize.INTEGER,
+          allowNull: false,
           primaryKey: true,
-          autoIncrement: false,
+          type: Sequelize.UUID,
+          defaultValue: uuid(),
         },
         title: Sequelize.STRING,
         content: Sequelize.STRING,
@@ -16,12 +18,6 @@ class Card extends Model {
     );
 
     return this;
-  }
-
-  static async nextId() {
-    const nextId = await Card.max('id');
-
-    return nextId + 1;
   }
 }
 

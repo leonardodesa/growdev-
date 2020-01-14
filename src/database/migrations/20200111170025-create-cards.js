@@ -1,21 +1,16 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('users', {
+    queryInterface.createTable('cards', {
       id: {
-        allowNull: false,
-        primaryKey: true,
         type: Sequelize.UUID,
+        allowNUll: false,
+        primaryKey: true,
       },
-      name: {
+      title: {
         type: Sequelize.STRING,
         allowNUll: false,
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNUll: false,
-        unique: true,
-      },
-      password_hash: {
+      content: {
         type: Sequelize.STRING,
         allowNUll: false,
       },
@@ -29,5 +24,5 @@ module.exports = {
       },
     }),
 
-  down: queryInterface => queryInterface.dropTable('users'),
+  down: queryInterface => queryInterface.dropTable('cards'),
 };
