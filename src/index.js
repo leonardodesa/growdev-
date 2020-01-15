@@ -2,6 +2,10 @@ const axios = require("axios");
 
 class App {
     constructor() {
+        this.login = document.getElementById('navbar-login');
+        this.register = document.getElementById('navbar-register');
+        this.allPages = document.querySelectorAll('.all-pages')
+
         this.buttonCreate = document.getElementById("btn_create");
         this.buttonEdit = document.getElementById("btn_edit");
 
@@ -20,6 +24,28 @@ class App {
     registerEvents() {
         this.buttonCreate.onclick = (event) => this.createCard(event);
         this.buttonEdit.onclick = (event) => this.editCard(event);
+        this.login.onclick = (e) => this.showElement(e);
+        this.register.onclick = e => this.showElement(e);
+    }
+
+    showElement(e) {
+        const dataSelect = e.target.getAttribute("data-select");
+
+        this.hideAllPages();
+
+        this.showPage(dataSelect);
+    }
+
+    hideAllPages() {
+        for (const element of this.allPages) {
+            element.style.display = 'none';
+        }
+    }
+
+    showPage(dataSelect) {
+        console.log(dataSelect);
+        const showPage = document.querySelectorAll(`[data-select=${dataSelect}]`);
+        showPage[1].style.display = "block";
     }
 
     async getScraps(app) {

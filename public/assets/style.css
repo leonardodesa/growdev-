@@ -271,3 +271,18 @@ input[type=email]:placeholder {
 .btn-link, .title-home {
     color: #fff;
 }
+
+.pos-a-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.all-pages {
+    display: none;
+}
+
+.login {
+    display: block;
+}

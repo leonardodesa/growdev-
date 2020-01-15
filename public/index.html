@@ -27,15 +27,15 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <button id="login" type="button" class="btn btn-link">Log In</button>
-                        <button id="sign_in" type="button" class="btn btn-link">Sign In</button>
+                        <button id="navbar-login" data-select="login" type="button" class="btn btn-link">Log In</button>
+                        <button id="navbar-register" data-select="register" type="button" class="btn btn-link">Sign In</button>
                     </li>
                 </ul>
             </div>
         </div>
 
         <main role="main">
-            <section class="jumbotron container-cards all-forms">
+            <div id="register-recados" data-select="recados" class="jumbotron container-cards all-pages">
                 <div class="container d-flex justify-content-center flex-md-column align-items-center">
                     <div class="jumbotron-heading">
                         <h2>Deixe um recado abaixo:</h2>
@@ -55,9 +55,9 @@
                         <button type="submit" id="btn_create" class="btn bg-blue">Criar recado</button>
                     </form>
                 </div>
-            </section>
+            </div>
             
-            <div class="container container-cards all-forms">
+            <div id="recados" data-select="recados" class="container container-cards all-pages">
                 <div class="jumbotron-heading text-center">
                     <h2>Verifique seus recados abaixo:</h2>
                 </div>
@@ -88,7 +88,7 @@
                 </div>
             </div>
 
-            <div class="login all-forms">
+            <div class="login all-pages pos-a-centere" data-select="login">
                 <div class="wrapper fadeInDown">
                     <div id="formContent">
                         <div class="fadeIn first">
@@ -100,11 +100,11 @@
                             <input type="text" id="login-password" class="fadeIn third" name="login" placeholder="password">
                             <input type="submit" id="login" class="fadeIn fourth" value="Log In">
                         </form>
-                    </input>
+                    </div>
                 </div>
             </div>
 
-            <div class="register all-forms">
+            <div class="register all-pages" data-select="register">
                 <div class="wrapper fadeInDown">
                     <div id="formContent">
                         <div class="fadeIn first">
