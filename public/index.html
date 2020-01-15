@@ -7,11 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./assets/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="./assets/alertifyjs/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="./assets/alertifyjs/build/css/themes/semantic.min.css"/>
+    <link rel="stylesheet" href="./assets/alertifyjs/build/css/themes/default.min.css">
     <title>Desafio Autenticação</title>
 </head>
 
 <body>
-    <header>
+    <header id="container">
         <div id="nav-bar" class="navbar bg-blue box-shadow">
             <div class="container d-flex justify-content-between">
                 <a href="/" class="navbar-brand d-flex align-items-center">
@@ -34,7 +37,7 @@
             </div>
         </div>
 
-        <main role="main">
+        <main id="main" role="main">
             <div id="register-recados" data-select="recados" class="jumbotron container-cards all-pages">
                 <div class="container d-flex justify-content-center flex-md-column align-items-center">
                     <div class="jumbotron-heading">
@@ -88,40 +91,47 @@
                 </div>
             </div>
 
-            <div class="login all-pages pos-a-centere" data-select="login">
+ 
+            <div class="login all-pages pos-a-center" data-select="login">
                 <div class="wrapper fadeInDown">
                     <div id="formContent">
                         <div class="fadeIn first">
                             <h3 class="m-3">Login</h3>
                         </div>
 
-                        <form>
-                            <input type="text" id="login-email" class="fadeIn second" name="email" placeholder="email">
-                            <input type="text" id="login-password" class="fadeIn third" name="login" placeholder="password">
-                            <input type="submit" id="login" class="fadeIn fourth" value="Log In">
-                        </form>
+                        <input type="email" id="login-email" class="fadeIn second" name="email" placeholder="email" required>
+                        <input type="password" id="login-password" class="fadeIn third" name="login" placeholder="password" required>
+                        <input type="submit" id="submit-login" class="fadeIn fourth" value="Log In">
                     </div>
                 </div>
             </div>
 
-            <div class="register all-pages" data-select="register">
+            <div class="register all-pages pos-a-center" data-select="register">
                 <div class="wrapper fadeInDown">
                     <div id="formContent">
                         <div class="fadeIn first">
                             <h3 class="m-3">Sign In</h3>
                         </div>
-                        <form>
-                            <input type="text" id="register-name" class="fadeIn second" name="Name" placeholder="name">
-                            <input type="email" id="register-email" class="form-control" aria-describedby="emailHelp" placeholder="email">
-                            <input type="text" id="register-password" class="fadeIn second" name="Password" placeholder="password">
-                            <input type="text" id="register-confirm-password" class="fadeIn second" name="Confirm password" placeholder="Confirm password">
-                            <input type="submit" id="register" class="fadeIn fourth" value="Sign In">
-                        </form>
+
+                        <input type="text" id="register-name" class="fadeIn second" name="Name" placeholder="name" required>
+                        <input type="email" id="register-email" class="form-control" aria-describedby="emailHelp" placeholder="email" required>
+                        <input type="password" id="register-password" class="fadeIn second" name="Password" placeholder="password" required>
+                        <input type="password" id="register-confirm-password" class="fadeIn second" name="Confirm password" placeholder="Confirm password" required>
+                        <input type="submit" id="register" class="fadeIn fourth" value="Sign In">
                     </div>
                 </div>
             </div>
+
+            <div id="container-loading" class="loading pos-a-center d-none">
+                <button class="btn btn-primary pos-a-center" type="button" disabled>
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
+            </div>
         </main>
     <header>
+
+    <script src="./assets//alertifyjs/src/js/alertify.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="./assets/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="./bundle.js"></script>

@@ -1,11 +1,18 @@
-const axios = require("axios");
+import axios from 'axios';
+import { Login } from './login';
+import { Register } from './register';
+import index from './index';
 
-class App {
+export default class App {
     constructor() {
-        this.login = document.getElementById('navbar-login');
-        this.register = document.getElementById('navbar-register');
-        this.allPages = document.querySelectorAll('.all-pages')
+        this.login = new Login();
+        this.register = new Register();
 
+        this.navbarLogin = document.getElementById('navbar-login');
+        this.navbarRegister = document.getElementById('navbar-register');
+        this.allPages = document.querySelectorAll('.all-pages');
+
+        // recados
         this.buttonCreate = document.getElementById("btn_create");
         this.buttonEdit = document.getElementById("btn_edit");
 
@@ -15,17 +22,20 @@ class App {
         this.cardEditing = null;
 
         // this.url = 'https://aplication-jwt-growdev.herokuapp.com/';
-        this.url = 'http://localhost:3030/';
+        this.url = "http://localhost:8000/";
 
-        this.getScraps(this);
         this.registerEvents();
     }
 
     registerEvents() {
         this.buttonCreate.onclick = (event) => this.createCard(event);
         this.buttonEdit.onclick = (event) => this.editCard(event);
-        this.login.onclick = (e) => this.showElement(e);
-        this.register.onclick = e => this.showElement(e);
+        this.navbarLogin.onclick = (e) => this.showElement(e);
+        this.navbarRegister.onclick = e => this.showElement(e);
+    }
+
+    getUrl() {
+        return this.url;
     }
 
     showElement(e) {
@@ -43,7 +53,6 @@ class App {
     }
 
     showPage(dataSelect) {
-        console.log(dataSelect);
         const showPage = document.querySelectorAll(`[data-select=${dataSelect}]`);
         showPage[1].style.display = "block";
     }
@@ -73,7 +82,6 @@ class App {
     }
 
     recoveryScraps(data) {
-        console.log(data);
         for(item of data) {
             const html = this.cardLayout(item.id, item.title, item.content);
 
@@ -202,7 +210,6 @@ class App {
         .finally(function () {
         }); 
     }
-
 }
 
 new App();
