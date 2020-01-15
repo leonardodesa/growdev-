@@ -10,7 +10,7 @@ class User extends Model {
           allowNull: false,
           primaryKey: true,
           type: Sequelize.UUID,
-          defaultValue: uuid(),
+          defaultValue: () => uuid(),
         },
         name: Sequelize.STRING,
         email: Sequelize.STRING,

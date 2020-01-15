@@ -11,16 +11,20 @@ class UserController {
       return res.status(400).json({ error: 'User alredy exists.' });
     }
 
-    const { id, name, email } = await User.create(req.body);
+    try {
+      const { id, name, email } = await User.create(req.body);
 
-    return res.json({
-      id,
-      name,
-      email,
-      token: jwt.sign({ id }, authConfig.secret, {
-        expiresIn: authConfig.expiresIn,
-      }),
-    });
+      return res.json({
+        id,
+        name,
+        email,
+        token: jwt.sign({ id }, authConfig.secret, {
+          expiresIn: authConfig.expiresIn,
+        }),
+      });
+    } catch (error) {
+      return res.status(400).json({ error });
+    }
   }
 
   async update(req, res) {

@@ -9,7 +9,7 @@ class Card extends Model {
           allowNull: false,
           primaryKey: true,
           type: Sequelize.UUID,
-          defaultValue: uuid(),
+          defaultValue: () => uuid(),
         },
         title: Sequelize.STRING,
         content: Sequelize.STRING,
