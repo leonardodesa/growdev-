@@ -1,3 +1,6 @@
+import jwt from 'jsonwebtoken';
+
+import authConfig from '../../config/auth';
 import User from '../models/User';
 
 class UserController {
@@ -8,11 +11,15 @@ class UserController {
       return res.status(400).json({ error: 'User alredy exists.' });
     }
 
-    const { name, email } = await User.create(req.body);
+    const { id, name, email } = await User.create(req.body);
 
     return res.json({
+      id,
       name,
       email,
+      token: jwt.sign({ id }, authConfig.secret, {
+        expiresIn: authConfig.expiresIn,
+      }),
     });
   }
 
