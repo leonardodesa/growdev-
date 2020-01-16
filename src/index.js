@@ -1,16 +1,13 @@
 import axios from 'axios';
 import { Login } from './login';
 import { Register } from './register';
-import index from './index';
+import { HandlePages } from './handlePages';
 
 export default class App {
     constructor() {
         this.login = new Login();
         this.register = new Register();
-
-        this.navbarLogin = document.getElementById('navbar-login');
-        this.navbarRegister = document.getElementById('navbar-register');
-        this.allPages = document.querySelectorAll('.all-pages');
+        this.handlePages = new HandlePages();
 
         // recados
         this.buttonCreate = document.getElementById("btn_create");
@@ -21,46 +18,16 @@ export default class App {
 
         this.cardEditing = null;
 
-        // this.url = 'https://aplication-jwt-growdev.herokuapp.com/';
-        this.url = "http://localhost:8000/";
-
         this.registerEvents();
     }
 
     registerEvents() {
         this.buttonCreate.onclick = (event) => this.createCard(event);
         this.buttonEdit.onclick = (event) => this.editCard(event);
-        this.navbarLogin.onclick = (e) => this.showElement(e);
-        this.navbarRegister.onclick = e => this.showElement(e);
-    }
-
-    getUrl() {
-        return this.url;
-    }
-
-    showElement(e) {
-        const dataSelect = e.target.getAttribute("data-select");
-
-        this.hideAllPages();
-
-        this.showPage(dataSelect);
-    }
-
-    hideAllPages() {
-        for (const element of this.allPages) {
-            element.style.display = 'none';
-        }
-    }
-
-    showPage(dataSelect) {
-        const showPage = document.querySelectorAll(`[data-select=${dataSelect}]`);
-        showPage[1].style.display = "block";
     }
 
     async getScraps(app) {
         const home = await axios.get(this.url + 'cards');
-
-        console.log(home);
 
         // const scraps = (async function () {
         //     await console.log('ok');

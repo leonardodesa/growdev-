@@ -1,14 +1,17 @@
 import axios from 'axios';
-import index from './index';
+import { Utils } from "./utils";
 import { Loading } from './loading';
+import { HandlePages } from './handlePages';
 
 export class Login {
     constructor() {
+        this.utils = new Utils();
+        this.loading = new Loading();
+        this.handlePages = new HandlePages();
+
         this.email = document.getElementById('login-email');
         this.password = document.getElementById('login-password');
         this.submitLogin = document.getElementById('submit-login');
-        
-        this.loading = new Loading();
 
         this.registerEvents();
     }
@@ -18,28 +21,23 @@ export class Login {
     }
 
     async loginUser() {
-        const { email, password } = this.getInfoLoginUser();
+        try {
+            const payload = this.getInfoLoginUser();
 
-        if ( email ) {
-            if ( password ) {
-                const main = new index();
+            this.loading.insertLoadingHtml();
 
-                try {
-                    const payload = { email, password };
+            const { data } = await axios.post(`${ this.utils.url }login`, payload );
 
-                    this.loading.insertLoadingHtml();
+            this.loading.removeLoadingHtml();
 
-                    const { data } = await axios.post(`${ main.url }login`, payload );
+            this.handlePages.hideAllPages();
+            this.handlePages.showPage('recados');
 
-                } catch (error) {
-                }
-                
-                this.loading.removeLoadingHtml();
-            } else {
-
-            }
-        } else {
-
+            sessionStorage.setItem("user", JSON.stringify(data));
+            this.utils.alertify(2, "Usuário logado", 200);
+        } catch (error) {
+            this.loading.removeLoadingHtml();
+            this.utils.alertify(2, "Email ou senha inválidos", 500);
         }
     }
 

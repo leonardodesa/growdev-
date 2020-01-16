@@ -1,9 +1,13 @@
 import axios from 'axios';
 import { Utils } from "./utils";
+import { Loading } from './loading';
+import { HandlePages } from './handlePages';
 
 export class Register {
     constructor() {
         this.utils = new Utils;
+        this.loading = new Loading();
+        this.handlePages = new HandlePages();
 
         this.name = document.getElementById('register-name');
         this.email = document.getElementById('register-email');
@@ -23,9 +27,16 @@ export class Register {
         if (this.returnBoolenCheckValuesInputs()) {
             const payload = this.getInfoUser();
 
-            const { name, token } = await axios.post(`${this.utils.url}register`, payload);
-            
-            sessionStorage.setItem("token", body.token);
+            this.loading.insertLoadingHtml();
+
+            const { data } = await axios.post(`${this.utils.url}register`, payload);
+
+            this.loading.removeLoadingHtml();
+
+            sessionStorage.setItem("token", data.token);
+
+            this.handlePages.hideAllPages();
+            this.handlePages.showPage('recados');
 
             this.utils.alertify(2, "Usuário cadastrado com sucesso", 200);
         } else {
