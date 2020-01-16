@@ -20,11 +20,9 @@ class AuthController {
     const { id, name } = user;
 
     return res.json({
-      user: {
-        id,
-        name,
-        email,
-      },
+      id,
+      name,
+      email,
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
