@@ -2,13 +2,15 @@ import axios from 'axios';
 import { Login } from './login';
 import { Register } from './register';
 import { HandlePages } from './handlePages';
+import { Utils } from './utils';
 
 export default class App {
     constructor() {
         this.login = new Login();
         this.register = new Register();
         this.handlePages = new HandlePages();
-
+        this.utils = new Utils();
+    
         // recados
         this.buttonCreate = document.getElementById("btn_create");
         this.buttonEdit = document.getElementById("btn_edit");
@@ -72,13 +74,32 @@ export default class App {
         event.preventDefault();
 
         if(this.title.value && this.content.value) {
-            this.sendToServer(this);
+            this.sendToServer();
         } else {
             alert("Preencha os campos!");
         }
     }
 
-    sendToServer(app) {
+    async sendToServer() {
+        const userInfo = JSON.parse(sessionStorage.getItem("user"));
+
+        if (userInfo) {
+            const payload = {
+                title: this.title.value,
+                content: this.content.value,
+            }
+            const { id, title, content } = await axios.post(`${this.url}cadastro-cards`, payload);
+            
+            let html = this.cardLayout(id, title, content);
+    
+            this.insertHtml(html);   
+    
+            this.clearForm();
+    
+            this.registerButtons();
+        } else {
+            this.utils.alertify(2, "Faça login, ou registre-se!", 500);
+        }
         // axios.post(this.url, {
         //         title: this.title.value,
         //         content: this.content.value
@@ -86,13 +107,6 @@ export default class App {
         //     .then(function (response) {
         //         const {id, title, content} = response.data;
                 // let html = app.cardLayout(id, title, content);
-                let html = app.cardLayout(1, app.title.value, app.content.value);
-
-                app.insertHtml(html);   
-
-                app.clearForm();
-
-                app.registerButtons();
             // })
             // .catch(function (error) {
             //     console.log(error);

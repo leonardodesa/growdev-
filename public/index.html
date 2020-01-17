@@ -38,53 +38,56 @@
         </div>
 
         <main id="main" role="main">
-            <div id="register-recados" data-select="recados" class="jumbotron container-cards all-pages">
-                <div class="container d-flex justify-content-center flex-md-column align-items-center">
-                    <div class="jumbotron-heading">
-                        <h2>Deixe um recado abaixo:</h2>
-                    </div>
 
-                    <form class="col-md-4 p-2">
-                        <div class="form-group">
-                            <p class="lead">Digite um título:</p>
-                            <input type="text" class="form-control" id="title" placeholder="Digite o título..."
-                                required>
+            <div id="container-recados">
+                <div id="register-recados" data-select="recados" class="jumbotron container-cards all-pages">
+                    <div class="container d-flex justify-content-center flex-md-column align-items-center">
+                        <div class="jumbotron-heading">
+                            <h2>Deixe um recado abaixo:</h2>
                         </div>
-                        <div class="form-group">
-                            <p class="lead">Digite uma descrição:</p>
-                            <input type="text" class="form-control" id="content" placeholder="Digite a descrição..."
-                                required>
-                        </div>
-                        <button type="submit" id="btn_create" class="btn bg-blue">Criar recado</button>
-                    </form>
-                </div>
-            </div>
-            
-            <div id="recados" data-select="recados" class="all-pages">
-                <div class="jumbotron-heading text-center">
-                    <h2>Verifique seus recados abaixo:</h2>
-                </div>
-
-                <div class="row p-4" id="container_card">
-
-                </div>
-
-                <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Editar Card</h5>
-                            </div>
-                            <div class="modal-body">
+    
+                        <form class="col-md-4 p-2">
+                            <div class="form-group">
                                 <p class="lead">Digite um título:</p>
-                                <input type="text" class="form-control" id="edit_title" placeholder="Digite o título..." required>
-                                <p class="lead">Digite uma descrição:</p>
-                                <input type="text" class="form-control" id="edit_content" placeholder="Digite o título..." required>
+                                <input type="text" class="form-control" id="title" placeholder="Digite o título..."
+                                    required>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                <button id="btn_edit" type="button" class="btn btn-primary">Editar</button>
+                            <div class="form-group">
+                                <p class="lead">Digite uma descrição:</p>
+                                <input type="text" class="form-control" id="content" placeholder="Digite a descrição..."
+                                    required>
+                            </div>
+                            <button type="submit" id="btn_create" class="btn bg-blue">Criar recado</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div id="recados" data-select="recados" class="all-pages">
+                    <div class="jumbotron-heading text-center">
+                        <h2>Verifique seus recados abaixo:</h2>
+                    </div>
+    
+                    <div class="row p-4" id="container_card">
+    
+                    </div>
+    
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Editar Card</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="lead">Digite um título:</p>
+                                    <input type="text" class="form-control" id="edit_title" placeholder="Digite o título..." required>
+                                    <p class="lead">Digite uma descrição:</p>
+                                    <input type="text" class="form-control" id="edit_content" placeholder="Digite o título..." required>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    <button id="btn_edit" type="button" class="btn btn-primary">Editar</button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -32,25 +32,9 @@ export class HandlePages {
     showPage(dataSelect) {
         const pages = document.querySelectorAll(`[data-select=${dataSelect}]`) ;
 
-        const token = this.handlePagesRecadosLoading(dataSelect);
-
-        if(token)
-            pages.forEach((page) => {
-                page.style.display = "inline-block";
-            });
-        else if (dataSelect == 'login' || dataSelect == 'register' ) {
-            pages.forEach((page) => {
-                page.style.display = "inline-block";
-            });
-        }
-    }
-
-    handlePagesRecadosLoading(dataSelect) {
-        const userInfo = JSON.parse(sessionStorage.getItem("user"));
-
-        if (userInfo.token) {
-            return userInfo.token;
-        }
+        pages.forEach((page) => {
+            page.style.display = "inline-block";
+        });
     }
 
     hideNavBar() {
