@@ -22,6 +22,12 @@ class User extends Model {
       }
     );
 
+    this.associate = models => {
+      this.hasMany(models.Card, {
+        foreignKey: 'user_id',
+      });
+    };
+
     this.addHook('beforeSave', async user => {
       if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);

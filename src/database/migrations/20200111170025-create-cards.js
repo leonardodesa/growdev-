@@ -6,6 +6,15 @@ module.exports = {
         allowNUll: false,
         primaryKey: true,
       },
+      // uid_user: {
+      //   type: Sequelize.UUID,
+      //   references: {
+      //     model: 'User',
+      //     key: 'id',
+      //   },
+      //   onDelete: 'CASCADE',
+      //   allowNull: false,
+      // },
       title: {
         type: Sequelize.STRING,
         allowNUll: false,

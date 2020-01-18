@@ -17,6 +17,12 @@ class Card extends Model {
       { sequelize }
     );
 
+    this.associate = models => {
+      this.belongsTo(models.User, {
+        foreignKey: 'uid_user',
+      });
+    };
+
     return this;
   }
 }
