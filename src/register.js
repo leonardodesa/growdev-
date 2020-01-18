@@ -4,7 +4,8 @@ import { Loading } from './loading';
 import { HandlePages } from './handlePages';
 
 export class Register {
-    constructor() {
+    constructor(recados) {
+        this.recados = recados;
         this.utils = new Utils;
         this.loading = new Loading();
         this.handlePages = new HandlePages();
@@ -33,7 +34,7 @@ export class Register {
 
             this.loading.removeLoadingHtml();
 
-            sessionStorage.setItem("token", data.token);
+            sessionStorage.setItem("user", JSON.stringify(data));
 
             this.handlePages.hideAllPages();
             this.handlePages.showPage('recados');

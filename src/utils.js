@@ -3,7 +3,7 @@ import alertify from "alertifyjs";
 export class Utils {
     constructor() {
         // this.url = 'https://aplication-jwt-growdev.herokuapp.com/';
-        this.url = "http://localhost:8000/";
+        this.url = "http://localhost:3000/";
     }
 
     alertify(time, message, status) {

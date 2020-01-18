@@ -3,12 +3,14 @@ import { Utils } from "./utils";
 import { Loading } from './loading';
 import { HandlePages } from './handlePages';
 
+var config;
+var userInfo;
 export class Login {
-    constructor() {
+    constructor(recados) {
         this.utils = new Utils();
         this.loading = new Loading();
         this.handlePages = new HandlePages();
-
+        this.recados = recados;
         this.email = document.getElementById('login-email');
         this.password = document.getElementById('login-password');
         this.submitLogin = document.getElementById('submit-login');
@@ -34,7 +36,13 @@ export class Login {
             this.handlePages.showPage('recados');
 
             sessionStorage.setItem("user", JSON.stringify(data));
+    
             this.utils.alertify(2, "Usuário logado", 200);
+
+            const ok = await this.recados.getResults();
+            console.log(ok);
+            
+            
         } catch (error) {
             this.loading.removeLoadingHtml();
             this.utils.alertify(2, "Email ou senha inválidos", 500);
@@ -47,24 +55,4 @@ export class Login {
             password: this.password.value,
         }; 
     } 
-
-    getEmail() {
-        return this.email;
-    }
-
-    getPassword() {
-        return this.password;
-    }
-
-    getSubmitLogin() {
-        return this.submitLogin;
-    }
-
-    setEmail(value) {
-        this.email.value = value;
-    }
-
-    setPassword(value) {
-        this.password.value = value;
-    }
 }
