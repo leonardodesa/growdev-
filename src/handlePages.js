@@ -1,8 +1,5 @@
-import { Utils } from "./utils";
 export class HandlePages {
     constructor() {
-        this.utils = new Utils();
-
         this.navbarButtons = document.querySelectorAll('.nav-bar');
         this.allPages = document.querySelectorAll('.all-pages');
 

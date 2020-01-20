@@ -4,11 +4,7 @@ export class Loading {
         this.loading = document.querySelector('#container-loading');
     }
 
-    insertLoadingHtml() {
-        this.loading.classList.toggle("d-none");
-    }
-
-    removeLoadingHtml() {
+    handleLoading() {
         this.loading.classList.toggle("d-none");
     }
 };

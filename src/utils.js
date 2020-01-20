@@ -1,5 +1,4 @@
 import alertify from "alertifyjs";
-
 export class Utils {
     constructor() {
         // this.url = 'https://aplication-jwt-growdev.herokuapp.com/';

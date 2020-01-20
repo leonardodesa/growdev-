@@ -2,18 +2,19 @@ import axios from 'axios';
 import { Utils } from "./utils";
 import { Loading } from './loading';
 import { HandlePages } from './handlePages';
-
+import { Recado } from './Recado';
 export class Register {
     constructor() {
         this.utils = new Utils;
         this.loading = new Loading();
         this.handlePages = new HandlePages();
+        this.recados = new Recado();
 
         this.name = document.getElementById('register-name');
         this.email = document.getElementById('register-email');
         this.password = document.getElementById('register-password');
         this.confirmPassword = document.getElementById('register-confirm-password');
-        
+
         this.registerSubmit = document.getElementById('register');
 
         this.registerEvents();
@@ -27,18 +28,23 @@ export class Register {
         if (this.returnBoolenCheckValuesInputs()) {
             const payload = this.getInfoUser();
 
-            this.loading.insertLoadingHtml();
+            this.loading.handleLoading();
 
-            const { data } = await axios.post(`${this.utils.url}register`, payload);
+            try {
+                const { data } = await axios.post(`${this.utils.url}register`, payload);
+                
+                this.loading.handleLoading();
+    
+                sessionStorage.setItem("user", JSON.stringify(data));
+    
+                this.handlePages.hideAllPages();
+                this.handlePages.showPage('recados');
+    
+                this.utils.alertify(2, "Usuário cadastrado com sucesso", 200);
+            } catch (e) {
+                this.loading.handleLoading();
+            }
 
-            this.loading.removeLoadingHtml();
-
-            sessionStorage.setItem("token", data.token);
-
-            this.handlePages.hideAllPages();
-            this.handlePages.showPage('recados');
-
-            this.utils.alertify(2, "Usuário cadastrado com sucesso", 200);
         } else {
             this.utils.alertify(2, "Erro ao cadastar o usuário", 401);
         }
@@ -50,7 +56,7 @@ export class Register {
         for (let key in infoUser)
             if (!infoUser[key])
                 return false;
-        
+
         return true;
     }
 
@@ -70,7 +76,9 @@ export class Register {
     loginUser() {
         const infoUser = this.getInfoLoginUser();
 
-        const { data } = axios.post();
+        const {
+            data
+        } = axios.post();
     }
 
     getInfoLoginUser() {

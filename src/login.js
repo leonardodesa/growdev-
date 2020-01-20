@@ -1,17 +1,19 @@
 import axios from 'axios';
+import { Loading } from "./loading";
 import { Utils } from "./utils";
-import { Loading } from './loading';
-import { HandlePages } from './handlePages';
+import { HandlePages } from "./handlePages";
+import { Recado } from './Recado';
 
 export class Login {
     constructor() {
-        this.utils = new Utils();
-        this.loading = new Loading();
-        this.handlePages = new HandlePages();
-
         this.email = document.getElementById('login-email');
         this.password = document.getElementById('login-password');
         this.submitLogin = document.getElementById('submit-login');
+        
+        this.loading = new Loading();
+        this.utils = new Utils();
+        this.handlePages = new HandlePages();
+        this.recados = new Recado();
 
         this.registerEvents();
     }
@@ -21,24 +23,25 @@ export class Login {
     }
 
     async loginUser() {
+        this.loading.handleLoading();
+
         try {
             const payload = this.getInfoLoginUser();
-
-            this.loading.insertLoadingHtml();
-
-            const { data } = await axios.post(`${ this.utils.url }login`, payload );
-
-            this.loading.removeLoadingHtml();
-
+            
+            const { data } = await axios.post(`${this.utils.url}login`, payload);
+            
             this.handlePages.hideAllPages();
             this.handlePages.showPage('recados');
-
+            
             sessionStorage.setItem("user", JSON.stringify(data));
+            
             this.utils.alertify(2, "Usuário logado", 200);
-        } catch (error) {
-            this.loading.removeLoadingHtml();
+            
+            this.recados.getResults();
+        } catch (e) {
             this.utils.alertify(2, "Email ou senha inválidos", 500);
         }
+        this.loading.handleLoading();
     }
 
     getInfoLoginUser() {
@@ -47,24 +50,4 @@ export class Login {
             password: this.password.value,
         }; 
     } 
-
-    getEmail() {
-        return this.email;
-    }
-
-    getPassword() {
-        return this.password;
-    }
-
-    getSubmitLogin() {
-        return this.submitLogin;
-    }
-
-    setEmail(value) {
-        this.email.value = value;
-    }
-
-    setPassword(value) {
-        this.password.value = value;
-    }
 }
