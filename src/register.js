@@ -4,7 +4,8 @@ import { Loading } from './loading';
 import { HandlePages } from './handlePages';
 import { Recado } from './Recado';
 export class Register {
-    constructor() {
+    constructor(recados) {
+        this.recados = recados;
         this.utils = new Utils;
         this.loading = new Loading();
         this.handlePages = new HandlePages();
