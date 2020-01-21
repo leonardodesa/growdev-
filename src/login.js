@@ -4,8 +4,6 @@ import { Utils } from "./utils";
 import { HandlePages } from "./handlePages";
 import { Recado } from './Recado';
 
-var config;
-var userInfo;
 export class Login {
     constructor() {
         this.email = document.getElementById('login-email');
@@ -37,9 +35,9 @@ export class Login {
             
             sessionStorage.setItem("user", JSON.stringify(data));
             
-            this.utils.alertify(2, "Usuário logado", 200);
-            
             this.recados.getResults();
+
+            this.utils.alertify(2, "Usuário logado", 200);
         } catch (e) {
             this.utils.alertify(2, "Email ou senha inválidos", 500);
         }

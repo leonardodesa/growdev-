@@ -4,8 +4,7 @@ import { Loading } from './loading';
 import { HandlePages } from './handlePages';
 import { Recado } from './Recado';
 export class Register {
-    constructor(recados) {
-        this.recados = recados;
+    constructor() {
         this.utils = new Utils;
         this.loading = new Loading();
         this.handlePages = new HandlePages();
@@ -29,26 +28,37 @@ export class Register {
         if (this.returnBoolenCheckValuesInputs()) {
             const payload = this.getInfoUser();
 
-            this.loading.handleLoading();
-
             try {
-                const { data } = await axios.post(`${this.utils.url}register`, payload);
-                
                 this.loading.handleLoading();
-    
+
+                const { data } = await axios.post(`${this.utils.url}register`,
+                    payload
+                );
+
                 sessionStorage.setItem("user", JSON.stringify(data));
-    
+
                 this.handlePages.hideAllPages();
                 this.handlePages.showPage('recados');
-    
+
+                this.recados.getResults();
+
+                this.resetform();
+
                 this.utils.alertify(2, "Usuário cadastrado com sucesso", 200);
             } catch (e) {
-                this.loading.handleLoading();
+                this.utils.alertify(2, "Erro ao registrar o usuário", 500);
             }
-
+            this.loading.handleLoading();
         } else {
             this.utils.alertify(2, "Erro ao cadastar o usuário", 401);
         }
+    }
+
+    resetform() {
+        this.name.value = '';
+        this.email.value = ''; 
+        this.password.value = ''; 
+        this.confirmPassword.value = '';
     }
 
     returnBoolenCheckValuesInputs() {
@@ -61,31 +71,11 @@ export class Register {
         return true;
     }
 
-    stopEvents(e) {
-        e.stopPropagation();
-        e.preventDefault();
-    }
-
     getInfoUser() {
         return {
             name: this.name.value,
             email: this.email.value,
             password: this.password.value,
         }
-    }
-
-    loginUser() {
-        const infoUser = this.getInfoLoginUser();
-
-        const {
-            data
-        } = axios.post();
-    }
-
-    getInfoLoginUser() {
-        return {
-            email: this.email.value,
-            password: this.password.value,
-        };
     }
 }

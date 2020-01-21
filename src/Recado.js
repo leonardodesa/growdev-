@@ -5,6 +5,7 @@ import { HandlePages } from "./handlePages";
 
 var config;
 var userInfo;
+var cardEditing;
 
 export class Recado {
     constructor() {
@@ -18,8 +19,6 @@ export class Recado {
         this.utils = new Utils();
         this.handlePages = new HandlePages();
 
-        this.cardEditing = null;
-
         this.registerEvents();
     }
 
@@ -32,7 +31,16 @@ export class Recado {
         return JSON.parse(sessionStorage.getItem("user"));
     }
 
+    deleteCardsIfExists() {
+        const cards = document.querySelectorAll('.scrap');
+
+        for(const card of cards) {
+            card.remove();
+        }        
+    }
+
     async getResults() {
+        this.deleteCardsIfExists();
         try {
             userInfo = this.checkIfUserExists();
 
@@ -42,14 +50,15 @@ export class Recado {
                 }
             };
 
-            const { data } = await axios.get(`${this.utils.url}cards`, config);
-
             this.loading.handleLoading();
+
+            const { data } = await axios.get(`${this.utils.url}cards`, config);
 
             this.recoveryScraps(data);
         } catch (e) {
             this.utils.alertify(2, "Erro na encontrar os card", 500);
         }
+        this.loading.handleLoading();
     }
 
     recoveryScraps(data) {
@@ -73,27 +82,16 @@ export class Recado {
     }
 
     createCard(event) {
-        event.preventDefault();
+        this.utils.stopEvents(event);
 
         if (this.title.value && this.content.value) {
             this.sendToServer();
         } else {
-            alert("Preencha os campos!");
+            this.utils.alertify(2, "Preencha todos os campos!", 500);
         }
     }
 
     async sendToServer() {
-        userInfo = this.checkIfUserExists();
-
-        config = {
-            headers: {
-                Authorization: `Bearer ${userInfo.token}`
-            }
-        };
-
-        console.log(this);
-        
-
         if (userInfo) {
             const payload = {
                 title: this.title.value,
@@ -101,10 +99,12 @@ export class Recado {
             }
 
             try {
-                const { data } = await axios.post(`${this.utils.url}cadastro-cards`, {
+                this.loading.handleLoading();
+
+                const { data } = await axios.post(`${this.utils.url}cadastro-cards`,
                     payload,
                     config
-                });
+                );
 
                 let html = this.cardLayout(data.id, data.title, data.content);
 
@@ -121,12 +121,12 @@ export class Recado {
             this.utils.alertify(2, "Faça login, ou registre-se!", 500);
         }
 
-        this.loading.insertLoadingHtml();
+        this.loading.handleLoading();
     }
 
     cardLayout(id, title, content) {
         const html = `
-            <div class="col-sm-4" scrap="${id}">
+            <div class="col-sm-4 scrap" scrap="${id}">
                 <div class="card">
                     <div class="card-body">
                     <h5 class="card-title">${title}</h5>
@@ -156,15 +156,18 @@ export class Recado {
         const id = event.path[3].getAttribute('scrap');
 
         try {
-            const { data } = await axios.delete(`${this.utils.url}delete-cards/${id}`, {
+            this.loading.handleLoading();
+
+            const { data } = await axios.delete(`${this.utils.url}delete-cards/${id}`,
                 config
-            });
+            );
 
             event.path[3].remove();
-            this.utils.alertify(2, "Card excluido com sucesso");
+            this.utils.alertify(2, "Card excluido com sucesso!", 200);
         } catch (e) {
             this.utils.alertify(2, "Erro na encontrar os card", 500);
         }
+        this.loading.handleLoading();
     };
 
     openEditCard = (event) => {
@@ -177,8 +180,8 @@ export class Recado {
             document.getElementById("edit_title").value = title;
             document.getElementById("edit_content").value = content;
 
-            this.cardEditing = event.path[1];
-            this.cardEditing.editId = id;
+            cardEditing = event.path[1];
+            cardEditing.editId = id;
         } else {
             this.utils.alertify(2, "Preencha todas as informações", 500);
         }
@@ -186,9 +189,9 @@ export class Recado {
     };
 
     editCard = async (event) => {
-        const id = this.cardEditing.editId;
+        const id = cardEditing.editId;
         const title = document.getElementById("edit_title").value;
-        const content = document.getElementById("edit-content").value;
+        const content = document.getElementById("edit_content").value;
 
         if (title && content) {
             try {
@@ -196,18 +199,22 @@ export class Recado {
                     title,
                     content
                 }
-                const { data } = await axios.put(`${this.utils.url}update-cards/${id}`, {
+        
+                this.loading.handleLoading();
+
+                const { data } = await axios.put(`${this.utils.url}update-cards/${id}`,
                     payload,
                     config
-                });
+                );
 
-                this.cardEditing.children[0].innerHTML = title;
-                this.cardEditing.children[1].innerHTML = content;
+                cardEditing.children[0].innerHTML = title;
+                cardEditing.children[1].innerHTML = content;
 
-                this.utils.alertify(2, "Card atualizado com sucesso");
+                this.utils.alertify(2, "Card atualizado com sucesso", 200);
             } catch (e) {
                 this.utils.alertify(2, "Erro ao atualizar o card", 500);
             }
+            this.loading.handleLoading();
         } else {
             this.utils.alertify(2, "Informe todos os campos", 500);
         }

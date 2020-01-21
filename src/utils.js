@@ -1,8 +1,8 @@
 import alertify from "alertifyjs";
 export class Utils {
     constructor() {
-        // this.url = 'https://aplication-jwt-growdev.herokuapp.com/';
-        this.url = "http://localhost:3000/";
+        this.url = 'https://aplication-jwt-growdev.herokuapp.com/';
+        // this.url = "http://localhost:3000/";
     }
 
     alertify(time, message, status) {
@@ -10,5 +10,10 @@ export class Utils {
         alertify.set('notifier', 'position', 'top-right');
 
         status == 200 ? alertify.success(message) : alertify.error(message);
+    }
+
+    stopEvents(e) {
+        e.stopPropagation();
+        e.preventDefault();
     }
 }
