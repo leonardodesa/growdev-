@@ -4,11 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "node server.js",
+    "heroku-postbuild": "webpack -p",
     "build": "webpack --mode production",
     "build-dev": "webpack --mode development",
-    "dev": "webpack-dev-server --mode development",
-    "start": "node ./src/server.js",
-    "heroku-postbuild": "webpack -p"
+    "dev": "webpack-dev-server --mode development"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
@@ -24,6 +24,7 @@
     "alertifyjs": "^1.13.1",
     "axios": "^0.19.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "express": "^4.17.1"
   }
 }
