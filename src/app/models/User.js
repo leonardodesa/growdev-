@@ -24,7 +24,7 @@ class User extends Model {
 
     this.associate = models => {
       this.hasMany(models.Card, {
-        foreignKey: 'user_id',
+        foreignKey: 'id_user',
       });
     };
 

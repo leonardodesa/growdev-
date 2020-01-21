@@ -2,8 +2,13 @@ import Card from '../models/Card';
 
 class CardController {
   async index(req, res) {
-    const { idUser } = req;
-    const cards = await Card.findAll({ where: { user_id: idUser } });
+    const { userId } = req;
+
+    const cards = await Card.findAll({
+      where: {
+        id_user: userId,
+      },
+    });
 
     return res.json(cards);
   }
@@ -14,16 +19,19 @@ class CardController {
   }
 
   async store(req, res) {
-    const { title, content } = req.body;
-    const { idUser } = req;
+    try {
+      const { title, content } = req.body;
+      const { userId } = req;
+      const card = await Card.create({
+        title,
+        content,
+        id_user: userId,
+      });
 
-    const card = await Card.create({
-      title,
-      content,
-      id_user: idUser,
-    });
-
-    res.json(card);
+      res.json(card);
+    } catch (error) {
+      res.status(500).json({ erro: 'Erro na criação dos cards.' });
+    }
   }
 
   async update(req, res) {
